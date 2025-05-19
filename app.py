@@ -17,7 +17,7 @@ def process_prompt():
     data = request.get_json()
 
     llm = OpenAI(api_key=api_key, model="gpt-4o-mini") 
-    actual_prompt = data.get('prompt')
+    actual_prompt = data.get('input')
     print(f"Received Prompt: {actual_prompt}")
 
     # Define a prompt template
@@ -49,18 +49,17 @@ def process_prompt():
     result = llm.invoke(final_prompt)
     print(f"Raw LLM Response: {result}")
 
-    # Extract JSON from string using regex
-    match = re.search(r'\{.*?\}', result, re.DOTALL)
-    if match:
-        json_part = match.group()
-        result_json = json.loads(json_part)
-    else:
-        result_json = {
-            "error": "Model did not return JSON. Prompt may be incomplete or invalid.",
-            "rawResponse": result
-        }
-
-    return jsonify({"answer":result_json})
+    # Clean the response
+    cleaned = re.sub(r"```json|```", "", result.content).strip()
+ 
+    # Convert to dictionary
+    try:
+        parsed_output = json.loads(cleaned)
+    except json.JSONDecodeError as e:
+        print("Failed to decode JSON:", e)
+        parsed_output = {"error": "Invalid JSON format from LLM response"}
+ 
+    return jsonify({"answer": parsed_output})
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
