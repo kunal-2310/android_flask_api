@@ -60,7 +60,7 @@ def process_prompt():
             "rawResponse": result
         }
 
-    return jsonify(result_json)
+    return jsonify({"answer":result_json})
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
