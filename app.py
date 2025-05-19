@@ -12,7 +12,7 @@ CORS(app)
 # Load the OpenAI API Key from environment
 api_key = os.getenv("OPENAI_API_KEY")
 
-@app.route('/processPrompt', methods=['POST'])
+@app.route('/process/', methods=['POST'])
 def process_prompt():
     data = request.get_json()
 
