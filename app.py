@@ -38,7 +38,7 @@ def process_prompt():
         ("human", "\n\n\n\n do not generate the output based on the above provided sample that is only for reference how to generate response \
 \n\n\nnow the actual prompt is '{prompt}' and if any field data is missing then keep it blank \
 \n\n\n if there is nothing provided in quotes '' after actual prompt keyword then keep the structure of the response same and leave the values blank for eg- 'name':''\
-\n\n\n assign the priority on the basis of the urgency stated in the initial prompt accordingly to one of these- ['Low','Normal','High','Critical'])"
+\n\n\n assign the priority on the basis of the urgency stated in the initial prompt accordingly to one of these- ['Low','Normal','High','Critical']")
     ])
 
 
